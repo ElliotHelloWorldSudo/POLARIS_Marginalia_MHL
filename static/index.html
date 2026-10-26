@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marginalia · local peer review</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="sigil">§</span><b>Marginalia</b><small>peer review, powered by Gemma 4</small></div>
+  <div class="model" id="model"><i></i><span>connecting…</span></div>
+</header>
+
+<main>
+  <section id="v-upload" class="view">
+    <div class="hero">
+      <p class="eyebrow">Gemma 4 via the Gemini API</p>
+      <h1>Your paper, read like a<br><em>hostile reviewer.</em></h1>
+      <p class="lede">Every flaw is pinned to the exact sentence it came from, with a concrete fix. References are cross-checked, and the whole paper is summarised.</p>
+    </div>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".pdf,.docx,.txt,.md" hidden>
+      <div class="scan"></div>
+      <div class="drop-in">
+        <div class="glyph">⇪</div>
+        <strong id="drop-title">Drop a paper here</strong>
+        <span id="drop-sub">PDF, DOCX, TXT or MD · or click to browse</span>
+      </div>
+    </label>
+    <div class="opts">
+      <label class="check"><input type="checkbox" id="online" checked><span></span>Verify references against Crossref <small>(only network call besides the model download)</small></label>
+      <button id="go" class="btn" disabled>Begin review</button>
+    </div>
+    <p class="err" id="err"></p>
+  </section>
+
+  <section id="v-run" class="view" hidden>
+    <div class="run">
+      <div class="pct"><span id="pct">0</span><sup>%</sup></div>
+      <div class="bar"><i id="bar"></i></div>
+      <ol class="rail" id="rail"></ol>
+      <pre class="log" id="log"></pre>
+    </div>
+  </section>
+
+  <section id="v-result" class="view" hidden>
+    <div class="rhead">
+      <div class="rtitle">
+        <p class="eyebrow" id="r-file"></p>
+        <h2 id="r-title"></h2>
+        <div class="counts" id="r-counts"></div>
+      </div>
+      <div class="rside">
+        <div class="stamp" id="r-stamp"></div>
+        <div class="btns">
+          <button class="btn ghost" id="x-md">Export .md</button>
+          <button class="btn ghost" id="x-json">Export .json</button>
+          <button class="btn ghost" id="x-new">New paper</button>
+        </div>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button data-t="review" class="on">Review</button>
+      <button data-t="summary">Summary</button>
+      <button data-t="cites">Citations</button>
+    </nav>
+    <div id="t-review" class="tab split">
+      <article class="paper" id="paper"></article>
+      <aside class="panel">
+        <div class="verdict" id="verdict"></div>
+        <div class="filters" id="filters"></div>
+        <div id="cards"></div>
+      </aside>
+    </div>
+    <div id="t-summary" class="tab" hidden></div>
+    <div id="t-cites" class="tab" hidden></div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
